@@ -1,0 +1,119 @@
+<div class="content mt-5">
+    <div class="row row d-flex justify-content-center">
+        <div class="col-md-7 py-2">
+            <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="container border rounded">
+                <div class="row">
+                <div class='col-md-12 bg-light'>
+                    <label class="col-form-label font-weight-bold font-x-large">Angular Reactive Form</label>
+                </div>    
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-2 form-group">
+                        <label class="col-form-label font-weight-bold">Title</label>
+                        <select class="custom-select valid" id="title" name="title" aria-invalid="false" formControlName="title"
+                        [ngClass]="{ 'mandatory-field' : (registerFormControl.title.touched || submitted) && registerFormControl.title.errors?.required }"
+                        >
+                            <option selected=""></option>
+                            <option value="Mr">Mr</option>
+                            <option value="Ms">Ms</option>
+                            <option value="Mrs">Mrs</option>
+                            </select>
+                            <span class="text-danger font-small"
+                                *ngIf="(registerFormControl.title.touched || submitted) && registerFormControl.title.errors?.required"
+                            >
+                                Title is required
+                            </span>
+                        
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label class="col-form-label font-weight-bold">FirstName</label>
+            <input class="form-control" type='text' formControlName="fname"
+            [ngClass]="{ 'mandatory-field' : (registerFormControl.fname.touched || submitted) && registerFormControl.fname.errors?.required }"/>
+            <span class="text-danger font-small"
+                                *ngIf="(registerFormControl.fname.touched || submitted) && registerFormControl.fname.errors?.required">
+                                First Name is required
+                            </span>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <label  class="col-form-label font-weight-bold">LastName</label>
+                        <input class="form-control" type='text' formControlName="lname"
+                        [ngClass]="{ 'mandatory-field' : (registerFormControl.lname.touched || submitted) && registerFormControl.lname.errors?.required }"/>
+                        <span class="text-danger font-small"
+                                *ngIf="(registerFormControl.lname.touched || submitted) && registerFormControl.lname.errors?.required">
+                                Last Name is required
+                            </span>
+                                </div>
+                </div>
+                <div class="row">
+                    <div class='col-md-12'>
+                        <label class="col-form-label font-weight-bold">Email</label>
+                        <input class="form-control" type='text' formControlName="email"
+                        [ngClass]="{ 'mandatory-field' : ((registerFormControl.email.touched || submitted) && registerFormControl.email.errors?.required) || (registerFormControl.email.touched && registerFormControl.email.errors?.email)}"
+                        />
+                        <span class="text-danger  font-small"
+                                *ngIf="(registerFormControl.email.touched || submitted) && registerFormControl.email.errors?.required">
+                                Email is required
+                            </span>
+                            <span class="text-danger  font-small"
+                                *ngIf="registerFormControl.email.touched && registerFormControl.email.errors?.email">
+                                Enter must be a valid email address
+                            </span>
+                    </div>    
+                    </div>
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <label class="col-form-label font-weight-bold">Password</label>
+                            <input class="form-control" type='password' formControlName="password"
+                            [ngClass]="{ 'mandatory-field' : (registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required }"/>
+                            <span class="text-danger font-small"
+                                *ngIf="(registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required">
+                                Password is required
+                            </span>
+                            <app-passwordlengthcheck 
+                            [passwordToCheck]="registerForm.value.password"
+                            (passwordStrength)="passwordValid($event)"
+                            >
+                        </app-passwordlengthcheck>
+                        </div>  
+                        <div class='col-md-6'>
+                            <label class="col-form-label font-weight-bold">Confirm Password</label>
+                            <input class="form-control" type='password' formControlName="cpassword"
+                            [ngClass]="{ 'mandatory-field' : ((registerFormControl.cpassword.touched || submitted)&& registerFormControl.cpassword.errors?.required) || (registerFormControl.cpassword.touched && registerFormControl.cpassword.errors?.passwordMismatch) }"/>
+                            <span class="text-danger font-small"
+                                *ngIf="(registerFormControl.cpassword.touched || submitted)&& registerFormControl.cpassword.errors?.required">
+                                Confirm Password is required
+                            </span>
+                            <span class="text-danger  font-small"
+                                *ngIf="registerFormControl.cpassword.touched && registerFormControl.cpassword.errors?.passwordMismatch">
+                                Passwords does not match
+                            </span>
+                        </div>    
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 my-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input border" id="accepttc" formControlName="accepttc">
+                                    <label class="form-check-label font-weight-bold" for="accepttc"
+                                    [ngClass]="{ 'text-color-red' :  submitted && registerFormControl.accepttc.errors}"
+                                    >Accept Terms and Conditions</label>
+                                    <br/><span class="text-danger font-small"
+                                *ngIf="submitted && registerFormControl.accepttc.errors">
+                                Accept Ts & Cs is required
+                            </span>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-center py-2">
+                                <button class='btn btn-primary mr-2'>Register</button>
+                                <button class='btn btn-secondary' type="reset" (click)="onReset()">Cancel</button>
+                            </div>
+                        </div>
+            </div>
+        </form>
+            </div>
+    </div>
+
+</div>
