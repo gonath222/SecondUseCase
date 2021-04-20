@@ -66,14 +66,14 @@
                         <div class='col-md-6'>
                             <label class="col-form-label font-weight-bold">Password</label>
                             <input class="form-control" type='password' formControlName="password"
-                            [ngClass]="{ 'mandatory-field' : (registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required }"/>
+                            [ngClass]="{ 'mandatory-field' : ((registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required) || isValidPassword }"/>
                             <span class="text-danger font-small"
                                 *ngIf="(registerFormControl.password.touched || submitted) && registerFormControl.password.errors?.required">
                                 Password is required
                             </span>
                             <app-passwordlengthcheck 
-                            [passwordToCheck]="registerForm.value.password"
-                            (passwordStrength)="passwordValid($event)"
+                            [PasswordCheck]="registerForm.value.password"
+                            (isValidPassword)="isPasswordValid($event)"
                             >
                         </app-passwordlengthcheck>
                         </div>  
@@ -87,7 +87,7 @@
                             </span>
                             <span class="text-danger  font-small"
                                 *ngIf="registerFormControl.cpassword.touched && registerFormControl.cpassword.errors?.passwordMismatch">
-                                Passwords does not match
+                                Passwords must match
                             </span>
                         </div>    
                         </div>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-center py-2">
-                                <button class='btn btn-primary mr-2'>Register</button>
+                                <button class='btn btn-primary mr-2' type="submit">Register</button>
                                 <button class='btn btn-secondary' type="reset" (click)="onReset()">Cancel</button>
                             </div>
                         </div>
