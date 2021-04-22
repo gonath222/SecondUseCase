@@ -73,22 +73,24 @@
                             </span>
                             <app-passwordlengthcheck 
                             [PasswordCheck]="registerForm.value.password"
-                            (isValidPassword)="isPasswordValid($event)"
+                            (isValidPassword)="IsPasswordValid($event)"
                             >
                         </app-passwordlengthcheck>
                         </div>  
                         <div class='col-md-6'>
                             <label class="col-form-label font-weight-bold">Confirm Password</label>
                             <input class="form-control" type='password' formControlName="cpassword"
-                            [ngClass]="{ 'mandatory-field' : ((registerFormControl.cpassword.touched || submitted)&& registerFormControl.cpassword.errors?.required) || (registerFormControl.cpassword.touched && registerFormControl.cpassword.errors?.passwordMismatch) }"/>
+                            [ngClass]="{ 'mandatory-field' : ((registerFormControl.cpassword.touched || submitted)&& registerFormControl.cpassword.errors?.required) || !IsCPasswordValid }"/>
                             <span class="text-danger font-small"
                                 *ngIf="(registerFormControl.cpassword.touched || submitted)&& registerFormControl.cpassword.errors?.required">
                                 Confirm Password is required
                             </span>
-                            <span class="text-danger  font-small"
-                                *ngIf="registerFormControl.cpassword.touched && registerFormControl.cpassword.errors?.passwordMismatch">
-                                Passwords must match
-                            </span>
+                            <app-confirmpasswordcheck
+                            [PasswordText]="registerForm.value.password"
+                            [CPasswordText]="registerForm.value.cpassword"
+                            (isCPasswordValid)="IsCPasswordValid($event)">
+
+                            </app-confirmpasswordcheck>
                         </div>    
                         </div>
                         <div class="row">
