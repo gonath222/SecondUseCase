@@ -9,6 +9,7 @@ export class RegisterPageComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   isValidPassword= false;
+  isValidCPassword = false;
   constructor(private fb: FormBuilder) {
     
    }
@@ -23,9 +24,6 @@ export class RegisterPageComponent implements OnInit {
       accepttc: [false, Validators.requiredTrue],
       cpassword: ['', [Validators.required]],
     },
-      {
-        validator: [this.CheckPassandCPass('password', 'cpassword')]
-      }
     );
   }
 
@@ -47,34 +45,13 @@ export class RegisterPageComponent implements OnInit {
     this.submitted = false;
     this.registerForm.reset();
   }
-
  
-  CheckPassandCPass(password: string, confirmPassword: string) {
-    return (formGroup: FormGroup) => {
-      const pText = formGroup.controls[password];
-      const cpText = formGroup.controls[confirmPassword];
-
-      if (!pText || !cpText) {
-        return null;
-      }
-
-      if (cpText.errors && !cpText.errors.passwordMismatch ) {
-        return null;
-      }
-
-      if (pText.value !== cpText.value) {
-        cpText.setErrors({ passwordMismatch: true });
-      } 
-      else {
-        cpText.setErrors(null);
-      }
-    }
+    IsPasswordValid(result: boolean) {
+    this.isValidPassword = result;
   }
 
- 
-
-  isPasswordValid(result: boolean) {
-    this.isValidPassword = result;
+  IsCPasswordValid(result: boolean) {
+    this.isValidCPassword = result;
   }
 }
 
